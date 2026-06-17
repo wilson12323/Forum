@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分享校園新鮮事 - 基孝討論區</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">🏫 返回首頁</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                
+                <div class="card form-card p-4 mb-5 bg-white">
+                    <h3 class="fw-bold text-dark text-center mb-4">📝 分享校園新鮮事</h3>
+                    
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} small py-2" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form action="{{ url_for('create_post') }}" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-bold text-secondary">貼文標題 (選填)</label>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="幫你的貼文起個吸睛的標題吧...">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="content" class="form-label fw-bold text-secondary">貼文內容 <span class="text-danger">*</span></label>
+                            <textarea name="content" id="content" class="form-control" rows="6" placeholder="今天在基孝發生了甚麼有趣的事？（請遵守校規，文明發言）" required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="image" class="form-label fw-bold text-secondary">上傳相片 (選填)</label>
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+                            <div class="form-text">支援 JPG, PNG, GIF 等圖片格式。</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg fw-bold rounded-pill">🚀 匿名發佈</button>
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary rounded-pill">取消並返回</a>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
